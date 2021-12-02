@@ -10,57 +10,53 @@ from aocd import get_data
 
 input_data = list(get_data().split('\n'))
 
-d = [
-    "forward 5",
-    "down 5",
-    "forward 8",
-    "up 3",
-    "down 8",
-    "forward 2"
-]
 
 # %%
 def solution_1(data):
     """Resembles the solution b of aoc day 2.
 
     :param data: Input list of str commands
+    :return: Horizontal position times Depth
     """
 
-    h_pos, depth = 0, 0
+    h_position, depth = 0, 0
 
     for command in data:
         direction, distance = command.split(" ")
         distance = int(distance)
 
         if direction == "forward":
-            h_pos += distance
+            h_position += distance
         elif direction == "down":
             depth += distance
         elif direction == "up":
             depth -= distance
-    return h_pos * depth
+
+    return h_position * depth
 
 
 def solution_2(data):
     """Resembles the solution b of aoc day 2.
 
     :param data: Input list of str commands
+    :return: Horizontal position times Depth
     """
 
-    h_pos, depth, aim = 0, 0, 0
+    h_position, depth, aim = 0, 0, 0
 
     for command in data:
         direction, distance = command.split(" ")
         distance = int(distance)
 
         if direction == "forward":
-            h_pos += distance
+            h_position += distance
             depth +=  aim * distance
         elif direction == "down":
             aim += distance
         elif direction == "up":
             aim -= distance
-    return h_pos * depth
+
+    return h_position * depth
 
 # %%
 submit(
