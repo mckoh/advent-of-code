@@ -31,8 +31,20 @@ def to_complex(data, sep=" ", type_map=None):
     into. If left blank, the method will simply return a tuple of strings.
 
     If it e.g. should return a tuple with a string in its first place and
-    an integer value in second, you can specify type_map=[str, int]. Here
-    you can use all valid python data types (int, str, float, bool etc.).
+    an integer value in second, you can specify:
+
+    type_map=[("label1", str), ("label2", int)]
+
+    Here you can use all valid python data types (int, str, float, bool etc.).
+    The label is an expression that can be used to describe the value and
+    must be unique, e.g.:
+
+    a = "a b 1\\nb c 2\\nc d 3\\ne f 4"
+    to_complex(
+        a,
+        sep=" ",
+        type_map=[("h_command", str), ("v_command", str), ("val", int)]
+    )
 
     :param data: An AOC input data string
     :param sep: The seperator character used to split each line
@@ -45,12 +57,10 @@ def to_complex(data, sep=" ", type_map=None):
         output = []
         values = [tuple(value.split(sep)) for value in data.split("\n")]
         for value in values:
-            element = []
+            element = {}
             for i, item in enumerate(value):
-                element.append(
-                    type_map[i](item)
-                )
+                element[type_map[i][0]] = type_map[i][1](item)
             output.append(
-                tuple(element)
+                element
             )
         return output
