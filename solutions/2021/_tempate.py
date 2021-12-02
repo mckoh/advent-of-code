@@ -1,6 +1,6 @@
 """
-Day 03 Solution for Advent of Code
-Date: 03.12.2021
+Day xxx Solution for Advent of Code
+Date: xxx
 Author: Michael Kohlegger
 """
 
@@ -8,8 +8,10 @@ Author: Michael Kohlegger
 from aocd import submit
 from aocd import get_data
 
-from util_ import to_int, to_complex, to_str
+from util_ import to_int
 
+
+input_data = None
 # input_data = to_str(get_data()) or input_data = to_int(get_data())
 
 test_data = []
