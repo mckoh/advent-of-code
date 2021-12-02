@@ -1,6 +1,6 @@
 """
 Day 02 Solution for Advent of Code
-Date: 01.12.2021
+Date: 02.12.2021
 Author: Michael Kohlegger
 """
 
