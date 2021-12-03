@@ -11,3 +11,8 @@
     * [x] Part B
     * [x] Documentation
     * [x] Linting
+* Day 03
+    * [x] Part A
+    * [x] Part B
+    * [x] Documentation
+    * [x] Linting

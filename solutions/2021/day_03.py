@@ -49,7 +49,7 @@ def count_value(data, search="0"):
     return len([value for value in data if value==search])
 
 
-def find_max_min(data, col=0):
+def find_extreme(data, col=0, method="max"):
     """Find the most/least often occuring value in a column
 
     :param data: Die original list of binary numbers
@@ -60,12 +60,20 @@ def find_max_min(data, col=0):
     occ1 = count_value(to_columns(data, col=col), search="1")
 
     if occ0 > occ1:
-        return ("0", "1")
+        if method == "max":
+            return "0"
+        if method == "min":
+            return "1"
     else:
-        return ("1", "0")
+        if method == "max":
+            return "1"
+        if method =="min":
+            return "0"
+
+    return "1"
 
 
-def solution_1(data=test_data):
+def solution_1(data):
     """Resembles solution a of aoc day 3
 
     :param data: The data to play with
@@ -74,7 +82,8 @@ def solution_1(data=test_data):
     gamma_rate = ""
     epsilon_rate = ""
     for col in range(12):
-        max_occ, min_occ = find_max_min(data=data, col=col)
+        max_occ = find_extreme(data=data, col=col, method="max")
+        min_occ = find_extreme(data=data, col=col, method="min")
         gamma_rate += max_occ
         epsilon_rate += min_occ
     return to_dec(gamma_rate) * to_dec(epsilon_rate)
@@ -92,10 +101,49 @@ def to_dec(bin_number):
     return output
 
 
-def solution_2(data=test_data):
+def filter_numbers(data, col=0, method="max"):
+    """Filter only the numbers with the fitting digit in the n-th place
+
+    :param data: Your input List of binary numbers
+    :param col: The column which to consider for filtering
+    :param method: The method to applie for filtering (min/max)
+    :return: The filtered list
+    """
+
+    most_common = find_extreme(data=data, col=col, method=method)
+    return [value for value  in data if value[col]==most_common]
+
+
+def walk_list(data, objective="oxygen"):
+    """Sequentially filters the list until only one number remains
+
+    :param data: The original list to start with
+    :param objective: A switch wheather to do this for oxygen or co2
+    :return: The remaining binary number
+    """
+    if objective == "oxygen":
+        method = "max"
+    elif objective == "co2":
+        method = "min"
+
+    remaining_data = data
+    col = 0
+
+    while True:
+
+        remaining_data = filter_numbers(remaining_data, col=col, method=method)
+
+        if len(remaining_data)==1:
+            return remaining_data[0]
+        col += 1
+
+
+def solution_2(data):
     """Resembles solution a of aoc day 3"""
-    oxygen_gen_rate = ""
-    CO2_scrubber_rate = ""
+    oxygen_rate = walk_list(data=data, objective="oxygen")
+    co2_rate = walk_list(data=data, objective="co2")
+
+    return to_dec(oxygen_rate) * to_dec(co2_rate)
 
 
 # %%
@@ -105,5 +153,5 @@ submit(
 
 # %%
 submit(
-    solution_2(data=input_data, steps=3),
+    solution_2(data=input_data),
 )
