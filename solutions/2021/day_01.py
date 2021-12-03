@@ -7,8 +7,9 @@ Author: Michael Kohlegger
 # %%
 from aocd import submit
 from aocd import get_data
+from util_ import to_int
 
-input_data = [int(value) for value in get_data().split("\n")]
+input_data = to_int(get_data())
 
 
 # %%
