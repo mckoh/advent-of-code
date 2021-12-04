@@ -13,40 +13,31 @@ from numpy import zeros
 
 input_data = get_data()
 
-test_data = """7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
-22 13 17 11  0
- 8  2 23  4 24
-21  9 14 16  7
- 6 10  3 18  5
- 1 12 20 15 19
-
- 3 15  0  2 22
- 9 18 13 17  5
-19  8  7 25 23
-20 11 10 24  4
-14 21 16 12  6
-
-14 21 17 24  4
-10 16 15  9 19
-18  8 23 26 20
-22 11 13  6  5
- 2  0 12  3  7"""
-
+# %%
+print(input_data)
 
 # %%
 
 def get_numbers(data):
+    """Extracts number series from aoc input
+
+    :param data: Your aoc input data
+    :return: List of bingo numbers
+    """
     numbers = data.split("\n")[0]
     return [int(number) for number in numbers.split(",")]
 
 def get_boards(data):
+    """Extracts bingo boards as numpy matrices from aoc input
 
+    :param data: Your aoc input data
+    :return: Dictionary with bingo boards and hit_boards (all 0)
+    """
     from numpy import array, zeros
     bingo_boards = {}
 
     boards = data.split("\n\n")[1:]
-    boards = test_data.split("\n\n")[1:]
     for i, board in enumerate(boards):
         values = []
         for row in board.split("\n"):
@@ -63,6 +54,12 @@ def get_boards(data):
 
 
 def find_hit(board, number):
+    """Checks if a board contains the bingo number and where
+
+    :param board: The bingo board to check
+    :param number: The number to find on the board
+    :return: True if hit with v and h coordinates of hit
+    """
     from numpy import where
     try:
         h, v = where(board == number)
@@ -72,6 +69,11 @@ def find_hit(board, number):
 
 
 def check_hits(hit_board):
+    """Checks if a bingo board is finishes
+
+    :param hit_board: The hit matrix with 1 (hit) and 0 (unhit)
+    :return: True if board wins
+    """
     for row in hit_board:
         if sum(row) == 5:
             return True
@@ -82,6 +84,12 @@ def check_hits(hit_board):
 
 
 def sum_unhit(board, hit_board):
+    """Returns the sum of unhit numbers from a bingo board
+
+    :param board: The bingo board to check
+    :param hit_board: The hit matrix with 1 (hit) and 0 (unhit)
+    :return: Sum of unhit cells
+    """
     from numpy import where
     v, h = where(hit_board!=1)
     return sum(board[v,h])
@@ -90,11 +98,20 @@ def sum_unhit(board, hit_board):
 class BingoEngine:
 
     def __init__(self, data):
+        """BingoEngine class lets you play Bingo games
+
+        :param data: Your input Data
+        :return: None
+        """
         self.boards = get_boards(data)
         self.numbers = get_numbers(data)
 
     def play_round(self, number):
+        """Plays a traditional bingo stage
 
+        :param number: Number to be applied to bingo boards
+        :return: False or board sum and key
+        """
         for key in self.boards.keys():
             hit, v, h = find_hit(self.boards[key]["values"], number)
 
@@ -106,37 +123,76 @@ class BingoEngine:
                     self.boards[key]["values"],
                     self.boards[key]["hits"]
                 )
-                return points * number
+                return points * number, key
 
         return False
 
+    def play_squid_round(self, number, boards):
+        """Plays a squid bingo game stage
+
+        :param number: Number that should be applied to bingo boards
+        :param boards: Remaining boards that have not yet won
+        :return: False or winning boards of round {key: sum}
+        """
+        winners = {}
+        for key in boards:
+            hit, v, h = find_hit(self.boards[key]["values"], number)
+
+            if hit:
+                self.boards[key]["hits"][v,h] = 1
+
+            if check_hits(self.boards[key]["hits"]):
+                points = sum_unhit(
+                    self.boards[key]["values"],
+                    self.boards[key]["hits"]
+                )
+                winners[key] = points * number
+
+        return winners
+
     def play_game(self):
+        """Plays a sequence of Numbers in a traditional bingo game
+
+        :return: Winning-response
+        """
         for number in self.numbers:
-            response = self.play_round(number)
+            response = self.play_round(number)[0]
             if response:
                 return response
 
+    def play_squid_game(self):
+        """Plays a sequence of Numbers in a squid bingo game
+
+        :return: Winning-response
+        """
+        for number in self.numbers:
+            response = self.play_squid_round(number, self.boards)
+
+            if len(response)>0:
+
+                for key in response.keys():
+                    if len(self.boards) > 1:
+                        self.boards.pop(key)
+                    else:
+                        return response[key]
 
 def solution_1(data):
+    """Resembles solution 1 of aoc day 4"""
     be = BingoEngine(data)
     return be.play_game()
 
 def solution_2(data):
-    pass
+    """Resembles solution 2 of aoc day 4"""
+    be = BingoEngine(data)
+    return be.play_squid_game()
 
-
-solution_1(test_data)
 
 # %%
-be = BingoEngine(test_data)
-be.play_round(14)
-be.play_round(10)
-be.play_round(18)
-be.play_round(22)
-be.play_round(2)
+submit(
+    solution_1(input_data)
+)
 
-# %%
-sum_unhit(
-    be.boards[2]["values"],
-    be.boards[2]["hits"]
+#%%
+submit(
+    solution_2(input_data)
 )
