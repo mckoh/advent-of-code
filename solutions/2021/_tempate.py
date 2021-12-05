@@ -11,7 +11,6 @@ from _utilities import to_int, to_complex, to_str
 
 
 input_data = to_str(get_data())
-
 test_data = []
 
 
