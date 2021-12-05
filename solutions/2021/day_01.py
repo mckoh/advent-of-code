@@ -7,7 +7,7 @@ Author: Michael Kohlegger
 # %%
 from aocd import submit
 from aocd import get_data
-from util_ import to_int
+from _utilities import to_int
 
 input_data = to_int(get_data())
 
