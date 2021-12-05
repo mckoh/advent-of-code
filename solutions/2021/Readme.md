@@ -25,4 +25,4 @@
     * [x] Part A
     * [x] Part B
     * [x] Documentation
-    * [ ] Linting
+    * [x] Linting

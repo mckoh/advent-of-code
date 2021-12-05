@@ -7,14 +7,15 @@ Author: Michael Kohlegger
 # %%
 from aocd import submit
 from aocd import get_data
+from numpy import zeros
 from util_ import to_str
+
 
 input_data = to_str(get_data())
 
 
-# %%
 def deconstruct_data(data):
-    """Deconstructs input data into x/y parts
+    """Deconstructs input data into hor_position/vert_position parts
 
     :param data: Your input data
     """
@@ -23,12 +24,14 @@ def deconstruct_data(data):
         origin = row.split(" ")[0]
         destinaton = row.split(" ")[2]
 
-        x1, y1 = origin.split(",")
-        x2, y2 = destinaton.split(",")
+        horizonatal_start, vertial_start = origin.split(",")
+        horizonatal_end, vertial_end = destinaton.split(",")
         output.append(
             {
-                "x1": int(x1), "y1": int(y1),
-                "x2": int(x2), "y2": int(y2)
+                "horizonatal_start": int(horizonatal_start),
+                "vertial_start": int(vertial_start),
+                "horizonatal_end": int(horizonatal_end),
+                "vertial_end": int(vertial_end)
             }
         )
     return output
@@ -38,7 +41,11 @@ def filter_orthogonales(data):
 
     :param data: Your deconstructed data
     """
-    return [line for line in data if line["x1"]==line["x2"] or line["y1"]==line["y2"]]
+    return [
+        line for line in data
+        if line["horizonatal_start"]==line["horizonatal_end"]
+        or line["vertial_start"]==line["vertial_end"]
+    ]
 
 def construct_canvas(hor_dimension, vert_dimension):
     """creates your game canvas
@@ -47,7 +54,6 @@ def construct_canvas(hor_dimension, vert_dimension):
     :param vert_dimensions: Number of rows in canvas
     :return: Matrix with 0 in every position
     """
-    from numpy import zeros
     return zeros((vert_dimension, hor_dimension))
 
 def count_concentration_points(canvas, min_concentration):
@@ -72,25 +78,45 @@ def find_max_dims(data):
     horizontal_max = 0
     vertical_max = 0
     for line in data:
-        if max(line["x1"], line["x2"]) > horizontal_max:
-            horizontal_max = max(line["x1"], line["x2"])
-        if max(line["y1"], line["y2"]) > vertical_max:
-            vertical_max = max(line["y1"], line["y2"])
+
+        if max(
+            line["horizonatal_start"],
+            line["horizonatal_end"]
+        ) > horizontal_max:
+
+            horizontal_max = max(
+                line["horizonatal_start"],
+                line["horizonatal_end"]
+            )
+
+        if max(
+            line["vertial_start"],
+            line["vertial_end"]
+        ) > vertical_max:
+
+            vertical_max = max(
+                line["vertial_start"],
+                line["vertial_end"]
+            )
+
     return vertical_max+1, horizontal_max+1
 
-def get_steps(x1, x2, y1, y2):
+def get_steps(horizonatal_start,
+              horizonatal_end,
+              vertial_start,
+              vertial_end):
     """Returns the number of steps to go between x and y
 
-    :param x1: First x coordinate
-    :param x2: Second x coordinate
-    :param y1: First y coordinate
-    :param y2: Second y coordinate
+    :param horizonatal_start: First x coordinate
+    :param horizonatal_end: Second x coordinate
+    :param vertial_start: First y coordinate
+    :param vertial_end: Second y coordinate
     :return: Number of steps to go
     """
-    if x1 == x2:
-        steps = get_abs(y2-y1)
+    if horizonatal_start == horizonatal_end:
+        steps = get_abs(vertial_end-vertial_start)
     else:
-        steps = get_abs(x2-x1)
+        steps = get_abs(horizonatal_end-horizonatal_start)
     return steps
 
 def get_abs(value):
@@ -119,25 +145,32 @@ def solution(data, part=1):
         vert_dimension=vert_dimension
     )
     for line in working_data:
-        x1, x2 = line["x1"], line["x2"]
-        y1, y2 = line["y1"], line["y2"]
+        horizonatal_start = line["horizonatal_start"]
+        horizonatal_end = line["horizonatal_end"]
+        vertial_start = line["vertial_start"]
+        vertial_end = line["vertial_end"]
 
-        x, y = x1, y1
+        hor_position, vert_position = horizonatal_start, vertial_start
 
-        steps = get_steps(x1, x2, y1, y2)
+        steps = get_steps(
+            horizonatal_start,
+            horizonatal_end,
+            vertial_start,
+            vertial_end
+        )
 
         for _ in range(steps+1):
-            canvas[y, x] += 1
+            canvas[vert_position, hor_position] += 1
 
-            if y2 > y1:
-                y += 1
-            elif y2 < y1:
-                y -= 1
+            if vertial_end > vertial_start:
+                vert_position += 1
+            elif vertial_end < vertial_start:
+                vert_position -= 1
 
-            if x2 < x1:
-                x -= 1
-            elif x2 > x1:
-                x += 1
+            if horizonatal_end < horizonatal_start:
+                hor_position -= 1
+            elif horizonatal_end > horizonatal_start:
+                hor_position += 1
 
     return count_concentration_points(canvas, 2)
 
