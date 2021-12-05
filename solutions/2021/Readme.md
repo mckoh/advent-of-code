@@ -21,3 +21,8 @@
     * [x] Part B
     * [x] Documentation
     * [ ] Linting
+* Day 05
+    * [x] Part A
+    * [x] Part B
+    * [x] Documentation
+    * [ ] Linting
