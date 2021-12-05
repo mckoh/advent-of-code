@@ -8,7 +8,7 @@ Author: Michael Kohlegger
 from aocd import submit
 from aocd import get_data
 from numpy import zeros
-from util_ import to_str
+from _utilities import to_str
 
 
 input_data = to_str(get_data())
@@ -36,6 +36,7 @@ def deconstruct_data(data):
         )
     return output
 
+
 def filter_orthogonales(data):
     """Filters only horizontal and vertical lines
 
@@ -47,6 +48,7 @@ def filter_orthogonales(data):
         or line["vertial_start"]==line["vertial_end"]
     ]
 
+
 def construct_canvas(hor_dimension, vert_dimension):
     """creates your game canvas
 
@@ -55,6 +57,7 @@ def construct_canvas(hor_dimension, vert_dimension):
     :return: Matrix with 0 in every position
     """
     return zeros((vert_dimension, hor_dimension))
+
 
 def count_concentration_points(canvas, min_concentration):
     """Counts all datapoints with a value larger than min concentration
@@ -68,6 +71,7 @@ def count_concentration_points(canvas, min_concentration):
             if col >= min_concentration:
                 count += 1
     return count
+
 
 def find_max_dims(data):
     """Finds the number of dimensions, that the canvas needs to have
@@ -101,6 +105,7 @@ def find_max_dims(data):
 
     return vertical_max+1, horizontal_max+1
 
+
 def get_steps(horizonatal_start,
               horizonatal_end,
               vertial_start,
@@ -119,6 +124,7 @@ def get_steps(horizonatal_start,
         steps = get_abs(horizonatal_end-horizonatal_start)
     return steps
 
+
 def get_abs(value):
     """Returns an absolute interger value
 
@@ -126,6 +132,7 @@ def get_abs(value):
     :return: Absolute Value
     """
     return int((value**2)**0.5)
+
 
 def solution(data, part=1):
     """Resembles the solution of this AOC day

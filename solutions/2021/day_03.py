@@ -7,13 +7,12 @@ Author: Michael Kohlegger
 # %%
 from aocd import submit
 from aocd import get_data
+from _utilities import to_str
 
-from util_ import to_str
 
 input_data = to_str(get_data())
 
 
-# %%
 def to_columns(data, col=0):
     """Transform rows into columns
 

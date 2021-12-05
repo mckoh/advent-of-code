@@ -7,17 +7,11 @@ Author: Michael Kohlegger
 # %%
 from aocd import submit
 from aocd import get_data
-from aocd.transforms import numbers
-from numpy import zeros
+from numpy import array, zeros, where
 
 
 input_data = get_data()
 
-
-# %%
-print(input_data)
-
-# %%
 
 def get_numbers(data):
     """Extracts number series from aoc input
@@ -28,13 +22,13 @@ def get_numbers(data):
     numbers = data.split("\n")[0]
     return [int(number) for number in numbers.split(",")]
 
+
 def get_boards(data):
     """Extracts bingo boards as numpy matrices from aoc input
 
     :param data: Your aoc input data
     :return: Dictionary with bingo boards and hit_boards (all 0)
     """
-    from numpy import array, zeros
     bingo_boards = {}
 
     boards = data.split("\n\n")[1:]
@@ -60,7 +54,6 @@ def find_hit(board, number):
     :param number: The number to find on the board
     :return: True if hit with v and h coordinates of hit
     """
-    from numpy import where
     try:
         h, v = where(board == number)
         return True, h[0], v[0]
@@ -90,7 +83,6 @@ def sum_unhit(board, hit_board):
     :param hit_board: The hit matrix with 1 (hit) and 0 (unhit)
     :return: Sum of unhit cells
     """
-    from numpy import where
     v, h = where(hit_board!=1)
     return sum(board[v,h])
 
@@ -160,6 +152,8 @@ class BingoEngine:
             if response:
                 return response
 
+        return False
+
     def play_squid_game(self):
         """Plays a sequence of Numbers in a squid bingo game
 
@@ -176,15 +170,17 @@ class BingoEngine:
                     else:
                         return response[key]
 
+
 def solution_1(data):
     """Resembles solution 1 of aoc day 4"""
-    be = BingoEngine(data)
-    return be.play_game()
+    bingo_engine = BingoEngine(data)
+    return bingo_engine.play_game()
+
 
 def solution_2(data):
     """Resembles solution 2 of aoc day 4"""
-    be = BingoEngine(data)
-    return be.play_squid_game()
+    bingo_engine = BingoEngine(data)
+    return bingo_engine.play_squid_game()
 
 
 # %%
