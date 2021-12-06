@@ -85,13 +85,13 @@ class Game:
 def solution_1(data):
     """Resembles first part of this day's solution"""
     game = Game(input_data, days=80)
-    game.walk()
+    return game.walk()
 
 
 def solution_2(data):
     """Resembles second part of this day's solution"""
     game = Game(input_data, days=256)
-    game.walk()
+    return game.walk()
 
 
 # %%
