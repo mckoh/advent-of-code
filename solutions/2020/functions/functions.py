@@ -12,7 +12,7 @@ def get_split_data(day, year=2020, typ="int"):
 
     from aocd import get_data
 
-    data = get_data(year=year, day=day, session=session_string[year])
+    data = get_data(year=year, day=day)
     data = data.split("\n")
     if typ == "int":
         int_data = list()
