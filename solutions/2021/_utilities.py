@@ -14,13 +14,13 @@ def to_int(data, sep="\n"):
     return [int(value) for value in data.split(sep)]
 
 
-def to_str(data):
+def to_str(data, sep="\n"):
     """Breaks input data into a list of string elements.
 
     :param data: An AOC input data string
     :return: List of int elements
     """
-    return list(data.split('\n'))
+    return list(data.split(sep="\n"))
 
 
 def to_complex(data, sep=" ", type_map=None):
