@@ -5,13 +5,13 @@ Author: Michael Kohlegger
 """
 
 
-def to_int(data):
+def to_int(data, sep="\n"):
     """Breaks input data into a list of int elements
 
     :param data: An AOC input data string
     :return: List of str elements
     """
-    return [int(value) for value in data.split("\n")]
+    return [int(value) for value in data.split(sep)]
 
 
 def to_str(data):
