@@ -38,7 +38,7 @@ def calculate_distance(delta):
 
     :param delta: The distance between start and destination
     """
-    return sum([i for i in range(1, delta+1)])
+    return sum(list(range(1, delta + 1)))
 
 
 def solution_2(data):
@@ -46,7 +46,6 @@ def solution_2(data):
 
     :param data: Your input data
     """
-    start = int(median(data))
 
     distances = []
     for position in range(min(input_data), max(input_data)):
