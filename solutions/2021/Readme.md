@@ -36,3 +36,8 @@
     * [x] Part B
     * [x] Documentation
     * [x] Linting
+* Day 08
+    * [x] Part A
+    * [x] Part B
+    * [x] Documentation
+    * [ ] Linting

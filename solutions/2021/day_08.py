@@ -79,12 +79,17 @@ def solution_2(data):
                 for value in part_a.split()
             }
 
+            # pretty brute force but do this until you find the right
+            # wiring according to template
             if wiring == requrired:
+
+                # map part b parts to wiremap
                 output_value = [
                     "".join(sorted(map(wire_map.get, number)))
                     for number in part_b.split()
                 ]
 
+                # translate sequence to number and join parts
                 output_value = "".join(
                     str(requrired.index(number))
                     for number in output_value
