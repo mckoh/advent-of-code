@@ -42,7 +42,7 @@
     * [x] Documentation
     * [ ] Linting
 * Day 09
-    * [ ] Part A
+    * [x] Part A
     * [ ] Part B
     * [ ] Documentation
     * [ ] Linting
