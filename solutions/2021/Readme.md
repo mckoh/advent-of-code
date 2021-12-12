@@ -41,3 +41,13 @@
     * [x] Part B
     * [x] Documentation
     * [ ] Linting
+* Day 09
+    * [x] Part A
+    * [ ] Part B
+    * [ ] Documentation
+    * [ ] Linting
+* Day 10
+    * [x] Part A
+    * [x] Part B
+    * [x] Documentation
+    * [ ] Linting
