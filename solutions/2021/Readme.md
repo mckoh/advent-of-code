@@ -41,7 +41,7 @@
     * [x] Part B
     * [x] Documentation
     * [ ] Linting
-* Day 09
+* Day 09 (part 2 still needs cleaning)
     * [x] Part A
     * [ ] Part B
     * [ ] Documentation
@@ -50,4 +50,14 @@
     * [x] Part A
     * [x] Part B
     * [x] Documentation
+    * [ ] Linting
+* Day 11 (part 1/2 still need cleaning)
+    * [ ] Part A
+    * [ ] Part B
+    * [ ] Documentation
+    * [ ] Linting
+* Day 12
+    * [x] Part A
+    * [x] Part B
+    * [ ] Documentation
     * [ ] Linting
