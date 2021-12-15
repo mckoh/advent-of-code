@@ -7,7 +7,7 @@ Author: Michael Kohlegger
 # %%
 from aocd import submit
 from aocd import get_data
-from _utilities import to_complex
+from requests.api import head
 
 
 input_data = get_data(day=14, year=2021)
@@ -86,7 +86,59 @@ def solution_2(data, steps=40):
     dictionary = return_dictionary(data)
     base_string = return_base(data)
 
+    pair_count = {}
+    for i in range(0, len(base_string)-1):
+        if base_string[i:i+2] not in pair_count.keys():
+            pair_count[base_string[i:i+2]] = 1
+        else:
+            base_string[i:i+2] += 1
+
     for _ in range(steps):
+        new_pair_count = {}
+        for pair in pair_count:
+
+            inserter = dictionary[pair]
+            first_new_pair = pair[0]+inserter
+            second_new_pair = inserter+pair[1]
+
+            if first_new_pair not in new_pair_count:
+                new_pair_count[first_new_pair] = 0
+
+            if second_new_pair not in new_pair_count:
+                new_pair_count[second_new_pair] = 0
+
+            new_pair_count[first_new_pair] += pair_count[pair]
+            new_pair_count[second_new_pair] += pair_count[pair]
+
+        pair_count = new_pair_count
+
+    head_count = {}
+    tail_count = {}
+
+    for pair in pair_count:
+        if pair[0] not in head_count.keys():
+            head_count[pair[0]] = 0
+        if pair[1] not in tail_count.keys():
+            tail_count[pair[1]] = 0
+
+        head_count[pair[0]] += pair_count[pair]
+        tail_count[pair[1]] += pair_count[pair]
+
+    characters = set(list(head_count.keys()) + list(tail_count.keys()))
+    character_counts = {}
+
+    for character in characters:
+        if character not in character_counts.keys():
+            character_counts[character] = 0
+
+        if head_count.get(character):
+            character_counts[character] += head_count.get(character)
+        if tail_count.get(character):
+            character_counts[character] += tail_count.get(character)
+
+    counts = list(character_counts.values())
+    counts.sort()
+    return counts[-1] - counts[0], counts
 
 
 # %%
@@ -99,4 +151,6 @@ submit(
 # %%
 submit(
     solution_2(data=input_data),
+    day=14,
+    year=2021
 )

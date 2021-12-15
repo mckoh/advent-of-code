@@ -66,3 +66,8 @@
     * [x] Part B
     * [x] Documentation
     * [x] Linting
+* Day 14
+    * [x] Part A
+    * [x] Part B
+    * [ ] Documentation
+    * [ ] Linting
