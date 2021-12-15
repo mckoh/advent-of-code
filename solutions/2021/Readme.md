@@ -61,3 +61,8 @@
     * [x] Part B
     * [ ] Documentation
     * [ ] Linting
+* Day 13
+    * [x] Part A
+    * [x] Part B
+    * [x] Documentation
+    * [x] Linting
