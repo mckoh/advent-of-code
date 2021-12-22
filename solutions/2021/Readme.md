@@ -86,3 +86,23 @@
     * [x] Part B
     * [ ] Documentation
     * [ ] Linting
+* Day 18
+    * [ ] Part A
+    * [ ] Part B
+    * [ ] Documentation
+    * [ ] Linting
+* Day 19
+    * [ ] Part A
+    * [ ] Part B
+    * [ ] Documentation
+    * [ ] Linting
+* Day 15
+    * [ ] Part A
+    * [ ] Part B
+    * [ ] Documentation
+    * [ ] Linting
+* Day 16
+    * [x] Part A
+    * [ ] Part B
+    * [ ] Documentation
+    * [ ] Linting
