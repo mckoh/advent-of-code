@@ -10,7 +10,6 @@ from aocd import get_data
 
 
 input_data = get_data(day=17, year=2021)
-test_data = "target area: x=20..30, y=-10..-5"
 
 
 def split_data(data):
@@ -74,14 +73,10 @@ class Shot:
         y_max = 0
         step=0
 
-        # if x_velocity == 0:
-        #     return False, 0
-
         while True:
 
             step += 1
 
-            # Check if your shot missed the target in x and y
             if self.x_position > self.target["x_max"] or self.y_position < self.target["y_min"]:
                 return False, y_max
 
