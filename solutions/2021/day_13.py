@@ -95,7 +95,7 @@ def render(points):
     image = array([" "]*x_max*y_max).reshape((y_max, x_max))
     for coordinates in points:
         horizontal, vertical = coordinates[0], coordinates[1]
-        image[vertical][horizontal] = "#"
+        image[vertical][horizontal] = "█"
 
     for line in image:
         print("".join(line))

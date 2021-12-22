@@ -77,9 +77,9 @@ def solution_1(data, steps=10):
     counts = count_characters(
         walk(data=data, steps=steps)
     )
-    occurence_list = list(counts.values())
-    occurence_list.sort()
-    return occurence_list[-1] - occurence_list[0]
+    occurrence_list = list(counts.values())
+    occurrence_list.sort()
+    return occurrence_list[-1] - occurrence_list[0]
 
 
 def solution_2(data, steps=40):
